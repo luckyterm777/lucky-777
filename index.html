@@ -673,7 +673,6 @@
 
         function resolveVerdict(type) {
             const verdictText = document.getElementById('verdict-text');
-            const choicesContainer = document.getElementById('verdict-choices');
             
             if (type === 'forge') {
                 verdictText.innerHTML = `<strong>CRUCIBLE FORGED:</strong> You poured unshielded ambition into the network core. Your yield is maximum, but the High Spires have locked onto your coordinates. Prepare for interference.`;
@@ -681,9 +680,8 @@
                 verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
             }
             
-            if (choicesContainer) {
-                choicesContainer.innerHTML = '';
-            }
+            // Instantly clear the choice buttons container and show the reset button
+            document.getElementById('verdict-choices').innerHTML = '';
             document.getElementById('reset-btn').classList.remove('hidden');
         }
 
