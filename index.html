@@ -681,7 +681,9 @@
                 verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
             }
             
-            choicesContainer.innerHTML = '';
+            if (choicesContainer) {
+                choicesContainer.innerHTML = '';
+            }
             document.getElementById('reset-btn').classList.remove('hidden');
         }
 
