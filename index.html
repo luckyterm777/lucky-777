@@ -329,7 +329,7 @@
             justify-content: space-between;
         }
 
-        /* FULL-FLEDGED MAJESTIC ART DISPLAY (object-fit: contain shows entire card) */
+        /* FULL-FLEDGED MAJESTIC ART DISPLAY */
         .card-img-box {
             width: 100%;
             height: 460px; 
@@ -345,7 +345,7 @@
         .card-img-box img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Displays the 100% full tarot card art without cropping */
+            object-fit: contain;
         }
 
         .card-title-text {
@@ -525,49 +525,49 @@
         const deckDatabase = [];
         
         // --- COMPLETE TAROT MINOR ARCANA DECK LOADER ---
-const suits = ["wands", "cups", "swords", "pentacles"];
+        const suits = ["wands", "cups", "swords", "pentacles"];
 
-suits.forEach(suit => {
-    let suitRanks = [];
-    
-    if (suit === "swords") {
-        suitRanks = [
-            "01_ace_of_swords", "02_ace_of_swords", "03_ace_of_swords", "04_ace_of_swords", 
-            "05_ace_of_swords", "06_ace_of_swords", "07_ace_of_swords", "08_ace_of_swords", 
-            "09_ace_of_swords", "10_ace_of_swords", "king_of_swords", "knight_of_swords", 
-            "page_of_swords", "queen_of_swords"
-        ];
-    } else if (suit === "wands") {
-        suitRanks = [
-            "01 ace of wands", "02_of_wands", "03_of_wands", "04_of_wands", 
-            "05_of_wands", "06_of_wands", "07_of_wands", "08_of_wands", 
-            "09_of_wands", "10_of_wands", "king_of_wand", "kinght_of_wand", 
-            "page_of_wand", "queen_of_wand"
-        ];
-    } else if (suit === "cups") {
-        suitRanks = [
-            "01 ace of cups", "02_of_cups", "03_of_cups", "04_of_cups", 
-            "05_of_cups", "06_of_cups", "07_of_cups", "08_of_cups", 
-            "09 ace of cups", "10_of_cups", "king_of_cups", "knight_of_cups", 
-            "page_of_cups", "queen_of_cups"
-        ];
-    } else if (suit === "pentacles") {
-        suitRanks = [
-            "01 of pentacles", "02_of_pentacles", "03_of_pentacles", "04_of_pentacles", 
-            "05_of_pentacles", "06_of_pentacles", "07_of_pentacles", "08_of_pentacles", 
-            "09_of_pentacles", "10_of_pentacles", "king_of_pentacles", "knight_of_pentacles", 
-            "page_of_pentacles", "queen_of_pentacles"
-        ];
-    }
+        suits.forEach(suit => {
+            let suitRanks = [];
+            
+            if (suit === "swords") {
+                suitRanks = [
+                    "01_ace_of_swords", "02_ace_of_swords", "03_ace_of_swords", "04_ace_of_swords", 
+                    "05_ace_of_swords", "06_ace_of_swords", "07_ace_of_swords", "08_ace_of_swords", 
+                    "09_ace_of_swords", "10_ace_of_swords", "king_of_swords", "knight_of_swords", 
+                    "page_of_swords", "queen_of_swords"
+                ];
+            } else if (suit === "wands") {
+                suitRanks = [
+                    "01 ace of wands", "02_of_wands", "03_of_wands", "04_of_wands", 
+                    "05_of_wands", "06_of_wands", "07_of_wands", "08_of_wands", 
+                    "09_of_wands", "10_of_wands", "king_of_wand", "kinght_of_wand", 
+                    "page_of_wand", "queen_of_wand"
+                ];
+            } else if (suit === "cups") {
+                suitRanks = [
+                    "01 ace of cups", "02_of_cups", "03_of_cups", "04_of_cups", 
+                    "05_of_cups", "06_of_cups", "07_of_cups", "08_of_cups", 
+                    "09 ace of cups", "10_of_cups", "king_of_cups", "knight_of_cups", 
+                    "page_of_cups", "queen_of_cups"
+                ];
+            } else if (suit === "pentacles") {
+                suitRanks = [
+                    "01 of pentacles", "02_of_pentacles", "03_of_pentacles", "04_of_pentacles", 
+                    "05_of_pentacles", "06_of_pentacles", "07_of_pentacles", "08_of_pentacles", 
+                    "09_of_pentacles", "10_of_pentacles", "king_of_pentacles", "knight_of_pentacles", 
+                    "page_of_pentacles", "queen_of_pentacles"
+                ];
+            }
 
-    suitRanks.forEach(filenameBase => {
-        deckDatabase.push({
-            name: filenameBase.replace(/_/g, ' ').toUpperCase(),
-            image: `Assets/minor 56/${suit}/${filenameBase}.png`,
-            meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
+            suitRanks.forEach(filenameBase => {
+                deckDatabase.push({
+                    name: filenameBase.replace(/_/g, ' ').toUpperCase(),
+                    image: `Assets/minor 56/${suit}/${filenameBase}.png`,
+                    meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
+                });
+            });
         });
-    });
-});
 
         function selectGuild(guildName, cardId) {
             selectedGuild = guildName;
@@ -641,16 +641,22 @@ suits.forEach(suit => {
 
         function resolveVerdict(type) {
             const verdictText = document.getElementById('verdict-text');
+            const choicesContainer = document.getElementById('verdict-choices');
+            
             if (type === 'forge') {
                 verdictText.innerHTML = `<strong>CRUCIBLE FORGED:</strong> You poured unshielded ambition into the network core. Your yield is maximum, but the High Spires have locked onto your coordinates. Prepare for interference.`;
             } else {
                 verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
             }
+            
             choicesContainer.innerHTML = '';
             document.getElementById('reset-btn').classList.remove('hidden');
         }
 
         function resetSanctum() {
+            selectedGuild = "";
+            document.querySelectorAll('.guild-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('enter-btn').disabled = true;
             goToScreen('screen-gate');
         }
     </script>
