@@ -157,4 +157,4 @@
             transition: all 0.3s ease;
             text-align: left;
             position: relative;
-            z-index: 1
+            z-index: 

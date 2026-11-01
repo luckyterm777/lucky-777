@@ -522,9 +522,40 @@
         let drawnCards = [];
         let revealedCount = 0;
 
-        const deckDatabase = [];
-        
-        // --- COMPLETE TAROT MINOR ARCANA DECK LOADER ---
+        // --- MASTER DECK COMBINING MAJOR & MINOR ARCANA ---
+        const masterDeck = [];
+
+        // 1. Load Major Arcana (22 Cards)
+        const majorArcanaData = [
+            { name: "The Fool", image: "Assets/major 22/0_the_fool.png", meaning: "Spontaneity, new beginnings, infinite potential" },
+            { name: "The Magician", image: "Assets/major 22/1_the_magician.png", meaning: "Manifestation, resourcefulness, inspired power" },
+            { name: "The High Priestess", image: "Assets/major 22/2_the_high_priestess.png", meaning: "Intuition, sacred knowledge, mystery" },
+            { name: "The Empress", image: "Assets/major 22/3_the_empress.png", meaning: "Abundance, creativity, maternal grace" },
+            { name: "The Emperor", image: "Assets/major 22/4_the_emperor.png", meaning: "Authority, discipline, established structure" },
+            { name: "The Hierophant", image: "Assets/major 22/5_the_hierophant.png", meaning: "Spiritual tradition, mentors, ethics" },
+            { name: "The Lovers", image: "Assets/major 22/6_the_lovers.png", meaning: "Alignment of values, harmony, soul choices" },
+            { name: "The Chariot", image: "Assets/major 22/7_the_chariot.png", meaning: "Willpower, triumph, directed resolve" },
+            { name: "Strength", image: "Assets/major 22/8_strength.png", meaning: "Inner courage, quiet mastery, patience" },
+            { name: "The Hermit", image: "Assets/major 22/9_the_hermit.png", meaning: "Introspection, inner light, silent guidance" },
+            { name: "Wheel of Fortune", image: "Assets/major 22/10_wheel_of_fortune.png", meaning: "Inevitable cycles, cosmic shift, destiny" },
+            { name: "Justice", image: "Assets/major 22/11_justice.png", meaning: "Objective truth, cause and consequence, clarity" },
+            { name: "The Hanged Man", image: "Assets/major 22/12_the_hanged_man.png", meaning: "Surrender, altered perspective, sacred pause" },
+            { name: "Death", image: "Assets/major 22/13_death.png", meaning: "Profound transformation, endings, rebirth" },
+            { name: "Temperance", image: "Assets/major 22/14_temperance.png", meaning: "Alchemy, patience, middle-path balance" },
+            { name: "The Devil", image: "Assets/major 22/15_the_devil.png", meaning: "Shadow attachment, illusion, hidden chains" },
+            { name: "The Tower", image: "Assets/major 22/16_the_tower.png", meaning: "Sudden awakening, breakdown of false walls" },
+            { name: "The Star", image: "Assets/major 22/17_the_star.png", meaning: "Serenity, inspired hope, enduring faith" },
+            { name: "The Moon", image: "Assets/major 22/18_the_moon.png", meaning: "Dreams, instinct, navigating the mist" },
+            { name: "The Sun", image: "Assets/major 22/19_the_sun.png", meaning: "Vitality, radiant truth, total clarity" },
+            { name: "Judgement", image: "Assets/major 22/20_judgement.png", meaning: "Higher reckoning, awakening, life call" },
+            { name: "The World", image: "Assets/major 22/21_the_world.png", meaning: "Wholeness, completed journey, integration" }
+        ];
+
+        majorArcanaData.forEach(card => {
+            masterDeck.push(card);
+        });
+
+        // 2. Load Minor Arcana Suits (56 Cards)
         const suits = ["wands", "cups", "swords", "pentacles"];
 
         suits.forEach(suit => {
@@ -561,7 +592,7 @@
             }
 
             suitRanks.forEach(filenameBase => {
-                deckDatabase.push({
+                masterDeck.push({
                     name: filenameBase.replace(/_/g, ' ').toUpperCase(),
                     image: `Assets/minor 56/${suit}/${filenameBase}.png`,
                     meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
@@ -591,7 +622,8 @@
             document.getElementById('verdict-box').classList.add('hidden');
             document.getElementById('reset-btn').classList.add('hidden');
 
-            let shuffled = [...deckDatabase].sort(() => 0.5 - Math.random());
+            // Shuffle the complete master deck and pick 3 cards
+            let shuffled = [...masterDeck].sort(() => 0.5 - Math.random());
             drawnCards = shuffled.slice(0, 3);
 
             for(let i=0; i<3; i++) {
