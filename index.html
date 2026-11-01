@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCKY 777 // The Alchemical Sanctum</title>
+    <style>
+        :root {
+            --bg-void: #010103;
+            --bg-obsidian: #07070d;
+            --bg-card: #0c0c14;
+            --gold: #f3e5ab;
+            --gold-bright: #fff6d4;
+            --gold-dim: rgba(243, 229, 171, 0.2);
+            --cyan: #00f0ff;
+            --crimson: #ff2a5f;
+            --text-main: #c8c8d4;
+            --text-dim: #777788;
+            --border-ancient: #2d2415;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
+
+        /* Deep Dystopian Smoky Vignette & Mist */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: 
+                radial-gradient(circle at 50% 25%, rgba(15, 12, 5, 0.85) 0%, rgba(1, 1, 3, 0.98) 75%),
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 50%),
+                linear-gradient(90deg, rgba(255, 42, 95, 0.015), rgba(0, 240, 255, 0.015));
+            z-index: 1;
+            background-size: 100% 100%, 100% 4px, 8px 100%;
+            pointer-events: none;
+        }
+
+        header, main {
+            position: relative;
+            z-index: 5;
+        }
+
+        header {
+            width: 100%;
+            padding: 18px 10px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-ancient);
+            background: linear-gradient(180deg, #0d0d14 0%, #050508 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95);
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(243, 229, 171, 0.6);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.65rem;
+            color: var(--crimson);
+            letter-spacing: 3px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 42, 95, 0.4);
+        }
+
+        main {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sanctum-gate {
+            text-align: center;
+            padding: 35px 25px;
+            border: 1px solid var(--border-ancient);
+            background: linear-gradient(145deg, rgba(12, 12, 20, 0.95) 0%, rgba(4, 4, 8, 0.98) 100%);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.95);
+            width: 100%;
+            max-width: 850px;
+            margin-top: 15px;
+        }
+
+        .sanctum-title-tag {
+            color: var(--crimson);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 42, 95, 0.3);
+            display: inline-block;
+            padding: 4px 10px;
+        }
+
+        .sanctum-gate p {
+            color: var(--text-main);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .guild-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .guild-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-ancient);
+            padding: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            z-index: 10;
+        }
+
+        .guild-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--gold-dim);
+            transform: translateY(-2px);
+        }
+
+        .guild-card.selected {
+            border-color: var(--cyan);
+            background: #0d1522;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .guild-card h3, .guild-card p {
+            pointer-events: none;
+        }
+
+        .guild-card h3 {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .guild-card.selected h3 {
+            color: var(--cyan);
+        }
+
+        .guild-card p {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .quest-master-box {
+            width: 100%;
+            background: rgba(9, 9, 16, 0.95);
+            border: 1px solid var(--gold);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(243, 229, 171, 0.1);
+        }
+
+        .dialogue-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--gold-bright);
+            font-style: italic;
+        }
+
+        .alchemical-btn {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 12px 25px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px var(--gold-dim);
+            position: relative;
+            z-index: 10;
+        }
+
+        .alchemical-btn:hover:not(:disabled) {
+            background: var(--gold);
+            color: var(--bg-void);
+            box-shadow: 0 0 25px var(--gold);
+        }
+
+        .alchemical-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            border-color: var(--text-dim);
+            color: var(--text-dim);
+            box-shadow: none;
+        }
+
+        /* 3-CARD SPREAD AREA */
+        .cards-spread-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 100%;
+            margin: 10px 0 25px 0;
+            perspective: 1200px;
+        }
+
+        @media(max-width: 950px) {
+            .cards-spread-area {
+                grid-template-columns: 1fr;
+                max-width: 380px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* MAJESTIC TALL CARD SLOT (680px) */
+        .card-slot-wrapper {
+            width: 100%;
+            height: 680px; 
+            perspective: 1200px;
+            cursor: pointer;
+        }
+
+        .tarot-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tarot-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 1px solid var(--border-ancient);
+            background: var(--bg-obsidian);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 15px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.95);
+        }
+
+        .card-back {
+            background-image: url('Assets/card_back.png');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--gold);
+            justify-content: center;
+        }
+
+        .card-back-overlay {
+            background: rgba(3, 3, 6, 0.86);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-back-overlay h4 {
+            color: var(--gold);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .card-front {
+            transform: rotateY(180deg);
+            background: var(--bg-card);
+            padding: 12px;
+            justify-content: space-between;
+        }
+
+        /* FULL-FLEDGED MAJESTIC ART DISPLAY (object-fit: contain shows entire card) */
+        .card-img-box {
+            width: 100%;
+            height: 460px; 
+            background: #000;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Displays the 100% full tarot card art without cropping */
+        }
+
+        .card-title-text {
+            color: var(--gold-bright);
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 4px 0;
+        }
+
+        .card-meaning {
+            font-size: 0.72rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            border-top: 1px solid var(--border-ancient);
+            padding-top: 6px;
+            width: 100%;
+            text-align: left;
+            min-height: 55px;
+        }
+
+        .quest-verdict {
+            width: 100%;
+            background: rgba(9, 9, 16, 0.98);
+            border: 1px solid var(--gold);
+            padding: 25px;
+            margin-top: 15px;
+            box-shadow: 0 0 35px rgba(243, 229, 171, 0.2);
+            text-align: left;
+        }
+
+        .quest-verdict h3 {
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .quest-verdict p {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .choice-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .relic-reset-btn {
+            background: linear-gradient(135deg, #16120b 0%, #2b2211 100%);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 16px 35px;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 25px rgba(243, 229, 171, 0.25);
+            margin-top: 35px;
+            display: inline-block;
+        }
+
+        .relic-reset-btn:hover {
+            background: var(--gold);
+            color: var(--bg-void);
+            box-shadow: 0 0 40px var(--gold);
+            transform: scale(1.02);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lucky 777 // The Alchemical Sanctum</h1>
+        <div class="subtitle">Neural Diagnostic & Esoteric Surveillance</div>
+    </header>
+
+    <main>
+        <section id="screen-gate" class="screen active">
+            <div class="sanctum-gate">
+                <div class="sanctum-title-tag">WARNING: UNAUTHORIZED NEURAL UPLINK DETECTED</div>
+                <p>The neural terminal hums in the toxic dark. Most who plug in lose their footing in the static. Declare your allegiance before the Oracle locks your temporal coordinates into the vault.</p>
+                
+                <div class="guild-grid">
+                    <div class="guild-card" id="guild-1" onclick="selectGuild('The Iron Guild', 'guild-1')">
+                        <h3>1. The Iron Guild</h3>
+                        <p>Vault-keepers and industrial overlords who hoard physical leverage and crush dissenters.</p>
+                    </div>
+                    <div class="guild-card" id="guild-2" onclick="selectGuild('The Shadow Weavers', 'guild-2')">
+                        <h3>2. The Shadow Weavers</h3>
+                        <p>Dream-hackers and syndicate outcasts navigating the dark nets of subversion.</p>
+                    </div>
+                    <div class="guild-card" id="guild-3" onclick="selectGuild('The Sovereign Courts', 'guild-3')">
+                        <h3>3. The Sovereign Courts</h3>
+                        <p>High-spire elites who weaponize law and sacrifice human assets for market supremacy.</p>
+                    </div>
+                </div>
+
+                <button class="alchemical-btn" id="enter-btn" disabled onclick="enterSanctum()">[ JACK INTO THE SANCTUM ]</button>
+            </div>
+        </section>
+
+        <section id="screen-reading" class="screen">
+            <div class="quest-master-box">
+                <div class="dialogue-text">
+                    "The air smells of burnt copper and ozone. Three obsidian plates wait in the dark. Break their seals before the surveillance algorithms catch your frequency..."
+                </div>
+            </div>
+
+            <div class="cards-spread-area">
+                <div class="card-slot-wrapper" onclick="revealCard(0)">
+                    <div class="tarot-card" id="card-0">
+                        <div class="card-face card-back">
+                            <div class="card-back-overlay">
+                                <span style="font-size: 2.5rem;">⚜️</span>
+                                <h4>01 // The Root</h4>
+                                <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 6px;">Touch to break seal</p>
+                            </div>
+                        </div>
+                        <div class="card-face card-front" id="front-0"></div>
+                    </div>
+                </div>
+
+                <div class="card-slot-wrapper" onclick="revealCard(1)">
+                    <div class="tarot-card" id="card-1">
+                        <div class="card-face card-back">
+                            <div class="card-back-overlay">
+                                <span style="font-size: 2.5rem;">👁️</span>
+                                <h4>02 // The Catalyst</h4>
+                                <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 6px;">Touch to break seal</p>
+                            </div>
+                        </div>
+                        <div class="card-face card-front" id="front-1"></div>
+                    </div>
+                </div>
+
+                <div class="card-slot-wrapper" onclick="revealCard(2)">
+                    <div class="tarot-card" id="card-2">
+                        <div class="card-face card-back">
+                            <div class="card-back-overlay">
+                                <span style="font-size: 2.5rem;">⚡</span>
+                                <h4>03 // The Horizon</h4>
+                                <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 6px;">Touch to break seal</p>
+                            </div>
+                        </div>
+                        <div class="card-face card-front" id="front-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="verdict-box" class="quest-verdict hidden">
+                <h3 id="verdict-title">The Alchemical Decree</h3>
+                <p id="verdict-text">Processing your temporal alignment...</p>
+                <div class="choice-buttons" id="verdict-choices"></div>
+            </div>
+
+            <button id="reset-btn" class="relic-reset-btn hidden" onclick="resetSanctum()">[ ⚜️ RE-SEAL THE VAULT // WIPE TERMINAL LOGS ⚜️ ]</button>
+        </section>
+    </main>
+
+    <script>
+        let selectedGuild = "";
+        let drawnCards = [];
+        let revealedCount = 0;
+
+        const deckDatabase = [];
+        
+        // --- LOAD MAJOR ARCANA (22 Cards) ---
+        const majors = [
+            "00_the_fool", "01_the_magician", "02_the_high_priestess", "03_the_empress", "04_the_emperor",
+            "05_the_hierophant", "06_the_lovers", "07_the_chariot", "08_the_strength", "09_the_hermit",
+            "11_the_justice", "13_the_death", "14_the_temperance", "15_the_devil", "16_the_tower",
+            "17_the_star", "18_the_moon", "19_the_sun", "20_judgement", "21_the_world"
+        ];
+        majors.forEach(m => {
+            deckDatabase.push({
+                name: m.replace(/_/g, ' ').toUpperCase(),
+                image: `Assets/major 22/${m}.png`,
+                meaning: "A major planetary transit shifting your foundational reality and vault security."
+            });
+        });
+
+        // --- LOAD MINOR ARCANA SUITS (Wands, Cups, Swords, Pentacles) ---
+        const suits = ["wands", "cups", "swords", "pentacles"];
+        const ranks = ["01_ace", "02", "03", "04", "05", "06", "07", "08", "09", "10", "page", "knight", "queen", "king"];
+
+        suits.forEach(suit => {
+            ranks.forEach((rank) => {
+                let filename = `${rank}_of_${suit}.png`;
+                if(rank === "01_ace") filename = `01_ace_of_${suit}.png`;
+                
+                // Exact file naming synchronization based on folder inspections
+                if(suit === "swords") {
+                    if(rank === "01_ace") filename = "01_ace_of_swords.png";
+                    else filename = `${rank}_ace_of_swords.png`; // e.g. 04_ace_of_swords.png
+                }
+                if(suit === "wands") {
+                    if(rank === "01_ace") filename = "01_ace_of_wands.png";
+                    else if(rank === "03") filename = "03_of_wands.png";
+                    else if(rank === "08") filename = "08_of_wand.png";
+                    else if(rank === "09") filename = "09_of_wands.png";
+                    else if(rank === "page") filename = "page_of_wand.png";
+                    else if(rank === "queen") filename = "queen_of_wand.png";
+                    else if(rank === "king") filename = "king_of_wand.png";
+                    else if(rank === "knight") filename = "kinght_of_wand.png"; // folder typo match if present
+                    else filename = `${rank}_of_wands.png`;
+                }
+                if(suit === "cups") {
+                    if(rank === "01_ace") filename = "01_ace_of_cups.png";
+                    else if(rank === "02") filename = "02_ace_of_cups.png";
+                    else if(rank === "03") filename = "03_ace_of_cups.png";
+                    else if(rank === "04") filename = "04_ace_of_cups.png";
+                    else if(rank === "09") filename = "09_ace_of_cups.png";
+                    else filename = `${rank}_of_cups.png`;
+                }
+                if(suit === "pentacles") {
+                    if(rank === "01_ace") filename = "01_of_pentacles.png";
+                    else if(rank === "queen") filename = "quuen_of_pentacles.png"; // folder typo match
+                    else filename = `${rank}_of_pentacles.png`;
+                }
+
+                deckDatabase.push({
+                    name: `${rank.replace('_', ' ')} of ${suit}`.toUpperCase(),
+                    image: `Assets/minor 56/${suit}/${filename}`,
+                    meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
+                });
+            });
+        });
+
+        function selectGuild(guildName, cardId) {
+            selectedGuild = guildName;
+            document.querySelectorAll('.guild-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById(cardId).classList.add('selected');
+            document.getElementById('enter-btn').disabled = false;
+        }
+
+        function enterSanctum() {
+            goToScreen('screen-reading');
+            initializeReading();
+        }
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function initializeReading() {
+            revealedCount = 0;
+            document.getElementById('verdict-box').classList.add('hidden');
+            document.getElementById('reset-btn').classList.add('hidden');
+
+            let shuffled = [...deckDatabase].sort(() => 0.5 - Math.random());
+            drawnCards = shuffled.slice(0, 3);
+
+            for(let i=0; i<3; i++) {
+                document.getElementById(`card-${i}`).classList.remove('flipped');
+            }
+        }
+
+        function revealCard(index) {
+            const cardEl = document.getElementById(`card-${index}`);
+            if (cardEl.classList.contains('flipped')) return;
+
+            cardEl.classList.add('flipped');
+            revealedCount++;
+
+            const card = drawnCards[index];
+            const slotLabels = ["01 // Root Vector", "02 // Present Catalyst", "03 // Future Horizon"];
+
+            const frontEl = document.getElementById(`front-${index}`);
+            frontEl.innerHTML = `
+                <div style="font-size: 0.65rem; color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase;">${slotLabels[index]}</div>
+                <div class="card-img-box">
+                    <img src="${card.image}" alt="${card.name}">
+                </div>
+                <div class="card-title-text">${card.name}</div>
+                <div class="card-meaning">
+                    <strong>Diagnostic:</strong> ${card.meaning}
+                </div>
+            `;
+
+            if (revealedCount === 3) {
+                setTimeout(showVerdict, 900);
+            }
+        }
+
+        function showVerdict() {
+            const verdictBox = document.getElementById('verdict-box');
+            const verdictText = document.getElementById('verdict-text');
+            const choicesContainer = document.getElementById('verdict-choices');
+
+            verdictText.innerHTML = `The three plates are fully unsealed under the banner of <strong>${selectedGuild}</strong>. The surveillance grid is logging your footprint. Execute your final directive:`;
+            choicesContainer.innerHTML = `
+                <button class="alchemical-btn" onclick="resolveVerdict('forge')">[ FORGE THE CRUCIBLE // HIGH RISK YIELD ]</button>
+                <button class="alchemical-btn" style="border-color: var(--cyan); color: var(--cyan);" onclick="resolveVerdict('shadow')">[ DISTILL THROUGH SHADOW // MASK SIGNATURE ]</button>
+            `;
+            verdictBox.classList.remove('hidden');
+        }
+
+        function resolveVerdict(type) {
+            const verdictText = document.getElementById('verdict-text');
+            if (type === 'forge') {
+                verdictText.innerHTML = `<strong>CRUCIBLE FORGED:</strong> You poured unshielded ambition into the network core. Your yield is maximum, but the High Spires have locked onto your coordinates. Prepare for interference.`;
+            } else {
+                verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
+            }
+            choicesContainer.innerHTML = '';
+            document.getElementById('reset-btn').classList.remove('hidden');
+        }
+
+        function resetSanctum() {
+            goToScreen('screen-gate');
+        }
+    </script>
+</body>
+</html>
