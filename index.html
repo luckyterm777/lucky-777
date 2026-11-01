@@ -580,7 +580,7 @@
                 ];
             } else if (suit === "cups") {
                 suitRanks = [
-                    "01_ace_of_cups", "02_ace_of_cups", "03_ace_of_cups", "04_ace_of_cups", 
+                    "01_ace_of_cups", "02_of_cups", "03_of_cups", "04_of_cups", 
                     "05_of_cups", "06_of_cups", "07_of_cups", "08_of_cups", 
                     "09_ace_of_cups", "10_of_cups", "king_of_cups", "knight_of_cups", 
                     "page_of_cups", "queen_of_cups"
@@ -625,8 +625,10 @@
             document.getElementById('verdict-box').classList.add('hidden');
             document.getElementById('reset-btn').classList.add('hidden');
             
-            // Restore choice buttons when initializing a new reading
-            document.getElementById('verdict-choices').innerHTML = `
+            // Restore choice buttons container and make it visible using the hidden class
+            const choicesContainer = document.getElementById('verdict-choices');
+            choicesContainer.classList.remove('hidden');
+            choicesContainer.innerHTML = `
                 <button class="alchemical-btn" onclick="resolveVerdict('forge')">[ FORGE THE CRUCIBLE // HIGH RISK YIELD ]</button>
                 <button class="alchemical-btn" style="border-color: var(--cyan); color: var(--cyan);" onclick="resolveVerdict('shadow')">[ DISTILL THROUGH SHADOW // MASK SIGNATURE ]</button>
             `;
@@ -684,8 +686,8 @@
                 verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
             }
             
-            // Hide the choice buttons container and reveal the re-seal button
-            document.getElementById('verdict-choices').innerHTML = '';
+            // Add the 'hidden' class to hide choice buttons and reveal reset button
+            document.getElementById('verdict-choices').classList.add('hidden');
             document.getElementById('reset-btn').classList.remove('hidden');
         }
 
