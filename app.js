@@ -1,145 +1,160 @@
-const arcanaData = [
-  { name: "The Fool", numeral: "0", symbol: "🤹", meaning: "Spontaneity, new beginnings, infinite potential" },
-  { name: "The Magician", numeral: "I", symbol: "🪄", meaning: "Manifestation, resourcefulness, inspired power" },
-  { name: "The High Priestess", numeral: "II", symbol: "🌙", meaning: "Intuition, sacred knowledge, mystery" },
-  { name: "The Empress", numeral: "III", symbol: "👑", meaning: "Abundance, creativity, maternal grace" },
-  { name: "The Emperor", numeral: "IV", symbol: "🏛️", meaning: "Authority, discipline, established structure" },
-  { name: "The Hierophant", numeral: "V", symbol: "📜", meaning: "Spiritual tradition, mentors, ethics" },
-  { name: "The Lovers", numeral: "VI", symbol: "❤️", meaning: "Alignment of values, harmony, soul choices" },
-  { name: "The Chariot", numeral: "VII", symbol: "⚔️", meaning: "Willpower, triumph, directed resolve" },
-  { name: "Strength", numeral: "VIII", symbol: "🦁", meaning: "Inner courage, quiet mastery, patience" },
-  { name: "The Hermit", numeral: "IX", symbol: "🏮", meaning: "Introspection, inner light, silent guidance" },
-  { name: "Wheel of Fortune", numeral: "X", symbol: "☸️", meaning: "Inevitable cycles, cosmic shift, destiny" },
-  { name: "Justice", numeral: "XI", symbol: "⚖️", meaning: "Objective truth, cause and consequence, clarity" },
-  { name: "The Hanged Man", numeral: "XII", symbol: "🌲", meaning: "Surrender, altered perspective, sacred pause" },
-  { name: "Death", numeral: "XIII", symbol: "🥀", meaning: "Profound transformation, endings, rebirth" },
-  { name: "Temperance", numeral: "XIV", symbol: "🏺", meaning: "Alchemy, patience, middle-path balance" },
-  { name: "The Devil", numeral: "XV", symbol: "⛓️", meaning: "Shadow attachment, illusion, hidden chains" },
-  { name: "The Tower", numeral: "XVI", symbol: "⚡", meaning: "Sudden awakening, breakdown of false walls" },
-  { name: "The Star", numeral: "XVII", symbol: "⭐", meaning: "Serenity, inspired hope, enduring faith" },
-  { name: "The Moon", numeral: "XVIII", symbol: "🐺", meaning: "Dreams, instinct, navigating the mist" },
-  { name: "The Sun", numeral: "XIX", symbol: "☀️", meaning: "Vitality, radiant truth, total clarity" },
-  { name: "Judgement", numeral: "XX", symbol: "🎺", meaning: "Higher reckoning, awakening, life call" },
-  { name: "The World", numeral: "XXI", symbol: "🪐", meaning: "Wholeness, completed journey, integration" }
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCKY 777 // The Alchemical Sanctum</title>
+    <style>
+        :root {
+            --bg-void: #010103;
+            --bg-obsidian: #07070d;
+            --bg-card: #0c0c14;
+            --gold: #f3e5ab;
+            --gold-bright: #fff6d4;
+            --gold-dim: rgba(243, 229, 171, 0.2);
+            --cyan: #00f0ff;
+            --crimson: #ff2a5f;
+            --text-main: #c8c8d4;
+            --text-dim: #777788;
+            --border-ancient: #2d2415;
+        }
 
-let currentCard = null;
-let currentDob = "";
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-function revealCard() {
-  const inputElem = document.getElementById("birthdayInput");
-  const rawVal = inputElem.value;
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
 
-  if (!rawVal) {
-    alert("Please select or enter your birth date first!");
-    return;
-  }
+        /* Deep Dystopian Smoky Vignette & Mist */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: 
+                radial-gradient(circle at 50% 25%, rgba(15, 12, 5, 0.85) 0%, rgba(1, 1, 3, 0.98) 75%),
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 50%),
+                linear-gradient(90deg, rgba(255, 42, 95, 0.015), rgba(0, 240, 255, 0.015));
+            z-index: 1;
+            background-size: 100% 100%, 100% 4px, 8px 100%;
+            pointer-events: none;
+        }
 
-  // Handle both "yyyy-mm-dd" and "dd/mm/yyyy" or Date picker parsing
-  let year, month, day;
+        header, main {
+            position: relative;
+            z-index: 5;
+        }
 
-  if (inputElem.valueAsDate) {
-    const d = inputElem.valueAsDate;
-    year = d.getUTCFullYear();
-    month = d.getUTCMonth() + 1;
-    day = d.getUTCDate();
-  } else {
-    const delimiter = rawVal.includes("-") ? "-" : rawVal.includes("/") ? "/" : ".";
-    const parts = rawVal.split(delimiter).map(Number);
-    if (parts[0] > 1000) {
-      year = parts[0]; month = parts[1]; day = parts[2];
-    } else {
-      day = parts[0]; month = parts[1]; year = parts[2];
-    }
-  }
+        header {
+            width: 100%;
+            padding: 18px 10px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-ancient);
+            background: linear-gradient(180deg, #0d0d14 0%, #050508 100%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95);
+        }
 
-  currentDob = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+        h1 {
+            color: var(--gold);
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(243, 229, 171, 0.6);
+            text-transform: uppercase;
+        }
 
-  // Numerology Reduction (Century + Year + Month + Day)
-  const century = Math.floor(year / 100);
-  const shortYear = year % 100;
-  let total = century + shortYear + month + day;
+        .subtitle {
+            font-size: 0.65rem;
+            color: var(--crimson);
+            letter-spacing: 3px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 42, 95, 0.4);
+        }
 
-  while (total > 22) {
-    total = total.toString().split("").reduce((sum, d) => sum + parseInt(d), 0);
-  }
+        main {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
 
-  const cardIndex = total === 22 ? 0 : total;
-  currentCard = arcanaData[cardIndex];
+        .screen {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease forwards;
+        }
 
-  // Update card elements
-  document.getElementById("cardNumeral").innerText = currentCard.numeral;
-  document.getElementById("cardTitle").innerText = currentCard.name;
-  document.getElementById("cardMeaning").innerText = currentCard.meaning;
-  
-  // Use high-contrast embedded seal graphic instead of broken web image
-  const imgElem = document.getElementById("cardImage");
-  if (imgElem) {
-    imgElem.style.display = "none"; // Hide standard img tag to prevent broken image icon
-  }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-  // Place decorative seal inside card if not present
-  let symbolBox = document.getElementById("cardSymbolBox");
-  if (!symbolBox) {
-    symbolBox = document.createElement("div");
-    symbolBox.id = "cardSymbolBox";
-    symbolBox.style.height = "210px";
-    symbolBox.style.display = "flex";
-    symbolBox.style.flexDirection = "column";
-    symbolBox.style.justifyContent = "center";
-    symbolBox.style.alignItems = "center";
-    symbolBox.style.background = "#14121b";
-    symbolBox.style.borderRadius = "8px";
-    symbolBox.style.border = "1px solid #735c2b";
-    symbolBox.style.margin = "8px 0";
-    document.querySelector(".card-inner").insertBefore(symbolBox, document.querySelector(".card-footer"));
-  }
-  symbolBox.innerHTML = `
-    <div style="font-size: 64px; filter: drop-shadow(0 0 10px #c29b38);">${currentCard.symbol}</div>
-    <div style="color: #eed699; font-family: 'Cinzel', serif; font-size: 13px; margin-top: 10px; letter-spacing: 2px;">ARCANUM ${currentCard.numeral}</div>
-  `;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-  // Update date badge
-  const badge = document.getElementById("dobBadge");
-  if (badge) badge.innerText = `Aligned Date: ${currentDob}`;
+        .sanctum-gate {
+            text-align: center;
+            padding: 35px 25px;
+            border: 1px solid var(--border-ancient);
+            background: linear-gradient(145deg, rgba(12, 12, 20, 0.95) 0%, rgba(4, 4, 8, 0.98) 100%);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.95);
+            width: 100%;
+            max-width: 850px;
+            margin-top: 15px;
+        }
 
-  // Make card visible
-  const scene = document.getElementById("cardScene");
-  scene.style.display = "flex";
+        .sanctum-title-tag {
+            color: var(--crimson);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 42, 95, 0.3);
+            display: inline-block;
+            padding: 4px 10px;
+        }
 
-  const actionArea = document.getElementById("actionArea");
-  if (actionArea) actionArea.style.display = "block";
+        .sanctum-gate p {
+            color: var(--text-main);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
 
-  // Trigger 3D flip
-  const cardBox = document.getElementById("cardBox");
-  cardBox.classList.remove("is-flipped");
-  setTimeout(() => {
-    cardBox.classList.add("is-flipped");
-  }, 100);
-}
+        .guild-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
 
-// Allow flipping on click
-document.getElementById("cardBox").addEventListener("click", function() {
-  this.classList.toggle("is-flipped");
-});
-
-// Canvas Save Feature
-function downloadCardImage() {
-  if (!currentCard) return;
-
-  const canvas = document.getElementById("exportCanvas");
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = 600;
-  canvas.height = 900;
-
-  // Background
-  ctx.fillStyle = "#111018";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Gold border
-  ctx.strokeStyle = "#c29b38";
-  ctx.lineWidth = 8;
-  ctx.strokeRect(25, 25, canvas.width - 50, canvas.height - 50);
-
-  // Text
+        .guild-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-ancient);
+            padding: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            z-index: 1
