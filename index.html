@@ -510,7 +510,10 @@
             <div id="verdict-box" class="quest-verdict hidden">
                 <h3 id="verdict-title">The Alchemical Decree</h3>
                 <p id="verdict-text">Processing your temporal alignment...</p>
-                <div class="choice-buttons" id="verdict-choices"></div>
+                <div class="choice-buttons" id="verdict-choices">
+                    <button class="alchemical-btn" onclick="resolveVerdict('forge')">[ FORGE THE CRUCIBLE // HIGH RISK YIELD ]</button>
+                    <button class="alchemical-btn" style="border-color: var(--cyan); color: var(--cyan);" onclick="resolveVerdict('shadow')">[ DISTILL THROUGH SHADOW // MASK SIGNATURE ]</button>
+                </div>
             </div>
 
             <button id="reset-btn" class="relic-reset-btn hidden" onclick="resetSanctum()">[ ⚜️ RE-SEAL THE VAULT // WIPE TERMINAL LOGS ⚜️ ]</button>
@@ -621,6 +624,12 @@
             revealedCount = 0;
             document.getElementById('verdict-box').classList.add('hidden');
             document.getElementById('reset-btn').classList.add('hidden');
+            
+            // Restore choice buttons when initializing a new reading
+            document.getElementById('verdict-choices').innerHTML = `
+                <button class="alchemical-btn" onclick="resolveVerdict('forge')">[ FORGE THE CRUCIBLE // HIGH RISK YIELD ]</button>
+                <button class="alchemical-btn" style="border-color: var(--cyan); color: var(--cyan);" onclick="resolveVerdict('shadow')">[ DISTILL THROUGH SHADOW // MASK SIGNATURE ]</button>
+            `;
 
             // Shuffle the complete master deck and pick 3 cards
             let shuffled = [...masterDeck].sort(() => 0.5 - Math.random());
@@ -661,13 +670,8 @@
         function showVerdict() {
             const verdictBox = document.getElementById('verdict-box');
             const verdictText = document.getElementById('verdict-text');
-            const choicesContainer = document.getElementById('verdict-choices');
 
             verdictText.innerHTML = `The three plates are fully unsealed under the banner of <strong>${selectedGuild}</strong>. The surveillance grid is logging your footprint. Execute your final directive:`;
-            choicesContainer.innerHTML = `
-                <button class="alchemical-btn" onclick="resolveVerdict('forge')">[ FORGE THE CRUCIBLE // HIGH RISK YIELD ]</button>
-                <button class="alchemical-btn" style="border-color: var(--cyan); color: var(--cyan);" onclick="resolveVerdict('shadow')">[ DISTILL THROUGH SHADOW // MASK SIGNATURE ]</button>
-            `;
             verdictBox.classList.remove('hidden');
         }
 
@@ -680,7 +684,7 @@
                 verdictText.innerHTML = `<strong>SHADOW DISTILLATION:</strong> You routed your data through three dead proxy nodes. Your digital footprint vanishes into the static. Assets secured with zero threat escalation.`;
             }
             
-            // Instantly clear the choice buttons container and show the reset button
+            // Hide the choice buttons container and reveal the re-seal button
             document.getElementById('verdict-choices').innerHTML = '';
             document.getElementById('reset-btn').classList.remove('hidden');
         }
