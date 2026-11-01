@@ -524,67 +524,50 @@
 
         const deckDatabase = [];
         
-        // --- LOAD MAJOR ARCANA (22 Cards) ---
-        const majors = [
-            "00_the_fool", "01_the_magician", "02_the_high_priestess", "03_the_empress", "04_the_emperor",
-            "05_the_hierophant", "06_the_lovers", "07_the_chariot", "08_the_strength", "09_the_hermit",
-            "11_the_justice", "13_the_death", "14_the_temperance", "15_the_devil", "16_the_tower",
-            "17_the_star", "18_the_moon", "19_the_sun", "20_judgement", "21_the_world"
+        // --- COMPLETE TAROT MINOR ARCANA DECK LOADER ---
+const suits = ["wands", "cups", "swords", "pentacles"];
+
+suits.forEach(suit => {
+    let suitRanks = [];
+    
+    if (suit === "swords") {
+        suitRanks = [
+            "01_ace_of_swords", "02_ace_of_swords", "03_ace_of_swords", "04_ace_of_swords", 
+            "05_ace_of_swords", "06_ace_of_swords", "07_ace_of_swords", "08_ace_of_swords", 
+            "09_ace_of_swords", "10_ace_of_swords", "king_of_swords", "knight_of_swords", 
+            "page_of_swords", "queen_of_swords"
         ];
-        majors.forEach(m => {
-            deckDatabase.push({
-                name: m.replace(/_/g, ' ').toUpperCase(),
-                image: `Assets/major 22/${m}.png`,
-                meaning: "A major planetary transit shifting your foundational reality and vault security."
-            });
+    } else if (suit === "wands") {
+        suitRanks = [
+            "01 ace of wands", "02_of_wands", "03_of_wands", "04_of_wands", 
+            "05_of_wands", "06_of_wands", "07_of_wands", "08_of_wands", 
+            "09_of_wands", "10_of_wands", "king_of_wand", "kinght_of_wand", 
+            "page_of_wand", "queen_of_wand"
+        ];
+    } else if (suit === "cups") {
+        suitRanks = [
+            "01 ace of cups", "02_of_cups", "03_of_cups", "04_of_cups", 
+            "05_of_cups", "06_of_cups", "07_of_cups", "08_of_cups", 
+            "09 ace of cups", "10_of_cups", "king_of_cups", "knight_of_cups", 
+            "page_of_cups", "queen_of_cups"
+        ];
+    } else if (suit === "pentacles") {
+        suitRanks = [
+            "01 of pentacles", "02_of_pentacles", "03_of_pentacles", "04_of_pentacles", 
+            "05_of_pentacles", "06_of_pentacles", "07_of_pentacles", "08_of_pentacles", 
+            "09_of_pentacles", "10_of_pentacles", "king_of_pentacles", "knight_of_pentacles", 
+            "page_of_pentacles", "queen_of_pentacles"
+        ];
+    }
+
+    suitRanks.forEach(filenameBase => {
+        deckDatabase.push({
+            name: filenameBase.replace(/_/g, ' ').toUpperCase(),
+            image: `Assets/minor 56/${suit}/${filenameBase}.png`,
+            meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
         });
-
-        // --- LOAD MINOR ARCANA SUITS (Wands, Cups, Swords, Pentacles) ---
-        const suits = ["wands", "cups", "swords", "pentacles"];
-        const ranks = ["01_ace", "02", "03", "04", "05", "06", "07", "08", "09", "10", "page", "knight", "queen", "king"];
-
-        suits.forEach(suit => {
-            ranks.forEach((rank) => {
-                let filename = `${rank}_of_${suit}.png`;
-                if(rank === "01_ace") filename = `01_ace_of_${suit}.png`;
-                
-                // Exact file naming synchronization based on folder inspections
-                if(suit === "swords") {
-                    if(rank === "01_ace") filename = "01_ace_of_swords.png";
-                    else filename = `${rank}_ace_of_swords.png`; // e.g. 04_ace_of_swords.png
-                }
-                if(suit === "wands") {
-                    if(rank === "01_ace") filename = "01_ace_of_wands.png";
-                    else if(rank === "03") filename = "03_of_wands.png";
-                    else if(rank === "08") filename = "08_of_wand.png";
-                    else if(rank === "09") filename = "09_of_wands.png";
-                    else if(rank === "page") filename = "page_of_wand.png";
-                    else if(rank === "queen") filename = "queen_of_wand.png";
-                    else if(rank === "king") filename = "king_of_wand.png";
-                    else if(rank === "knight") filename = "kinght_of_wand.png"; // folder typo match if present
-                    else filename = `${rank}_of_wands.png`;
-                }
-                if(suit === "cups") {
-                    if(rank === "01_ace") filename = "01_ace_of_cups.png";
-                    else if(rank === "02") filename = "02_ace_of_cups.png";
-                    else if(rank === "03") filename = "03_ace_of_cups.png";
-                    else if(rank === "04") filename = "04_ace_of_cups.png";
-                    else if(rank === "09") filename = "09_ace_of_cups.png";
-                    else filename = `${rank}_of_cups.png`;
-                }
-                if(suit === "pentacles") {
-                    if(rank === "01_ace") filename = "01_of_pentacles.png";
-                    else if(rank === "queen") filename = "quuen_of_pentacles.png"; // folder typo match
-                    else filename = `${rank}_of_pentacles.png`;
-                }
-
-                deckDatabase.push({
-                    name: `${rank.replace('_', ' ')} of ${suit}`.toUpperCase(),
-                    image: `Assets/minor 56/${suit}/${filename}`,
-                    meaning: `A subtle disturbance in the ${suit} sector affecting your current operational leverage.`
-                });
-            });
-        });
+    });
+});
 
         function selectGuild(guildName, cardId) {
             selectedGuild = guildName;
